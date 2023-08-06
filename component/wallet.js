@@ -11,8 +11,9 @@ module.exports = [
         height: 10,
         align: 'left',
     },
-    async (component) => {
-        component.setContent(await exec('goal wallet list'))
+    async (component, render) => {
+        const { stdout } = await exec('goal wallet list');
+        component.setContent(stdout)
         render();
     }
 ]

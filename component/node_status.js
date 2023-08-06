@@ -12,7 +12,8 @@ module.exports = [
         align: 'left',
     },
     (component, render) => setInterval(async() => {
-        component.setContent(await exec('goal node status'))
+        const { stdout } = await exec('goal node status');
+        component.setContent(stdout)
         render();
     }, 1000)
 ]
