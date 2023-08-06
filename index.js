@@ -26,4 +26,6 @@ create('wallet',        grid, [1, 0, 1, 2]);
 create('log',           grid, [2, 2, 1, 3]);
 create('node_status',   grid, [2, 0, 1, 2]);
 
+// console.log('test');
+
 screen.key(['escape', 'q', 'C-c'], (ch, key) => process.exit(0));
