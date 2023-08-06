@@ -10,7 +10,7 @@ const grid = new contrib.grid({
 process.env.partKeyAddress = 'LFLL27QB3GZCGP3C4OQW64PAHDHVS65TWL2L3XCUW5LRFJCPX75HXNMVXA';
 
 const renderqueue = 0;
-const queueRender = function() {
+function queueRender() {
     renderqueue = 1;
 }
 setInterval(() => {
@@ -20,11 +20,11 @@ setInterval(() => {
 
 const { create } = require('./component/factory')
 
-create('logo',          grid, [0, 0, 1, 2]);
-create('line',          grid, [0, 2, 2, 3]);
-create('wallet',        grid, [1, 0, 1, 2]);
-create('log',           grid, [2, 2, 1, 3]);
-create('node_status',   grid, [2, 0, 1, 2]);
+create('logo',          grid, [0, 0, 1, 2], queueRender);
+create('line',          grid, [0, 2, 2, 3], queueRender);
+create('wallet',        grid, [1, 0, 1, 2], queueRender);
+create('log',           grid, [2, 2, 1, 3], queueRender);
+create('node_status',   grid, [2, 0, 1, 2], queueRender);
 
 // console.log('test');
 
