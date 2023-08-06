@@ -1,0 +1,17 @@
+{
+  "name": "algorand-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.11.0",
+    "nodejs-tail": "^1.1.1",
+    "term.js-cli": "^0.4.0"
+  }
+}
