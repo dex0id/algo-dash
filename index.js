@@ -9,7 +9,7 @@ const grid = new contrib.grid({
 
 process.env.partKeyAddress = 'LFLL27QB3GZCGP3C4OQW64PAHDHVS65TWL2L3XCUW5LRFJCPX75HXNMVXA';
 
-const renderqueue = 0;
+var renderqueue = 0;
 function queueRender() {
     renderqueue = 1;
 }

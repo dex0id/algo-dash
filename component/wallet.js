@@ -1,5 +1,6 @@
-const { exec } = require('node:child_process')
 const blessed = require('blessed')
+const util      = require('util');
+const exec      = util.promisify(require('node:child_process').exec)
 
 module.exports = [
     blessed.box,
@@ -10,6 +11,9 @@ module.exports = [
         height: 10,
         align: 'left',
     },
-    (component) => exec('goal wallet list', (err, output) => component.setContent(err || output))
+    async (component) => {
+        component.setContent(await exec('goal wallet list'))
+        render();
+    }
 ]
 
