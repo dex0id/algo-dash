@@ -1,9 +1,8 @@
-const blessed = require('blessed')
-const util      = require('util');
-const exec      = util.promisify(require('node:child_process').exec)
+const contrib = require('blessed-contrib')
+const dataModel = require('../data/model')
 
 module.exports = [
-    blessed.box,
+    contrib.table,
     {
         label: "Part Key Info",
         left: 1,
@@ -13,8 +12,22 @@ module.exports = [
     },
     async (component, layout) => {
         try {
-            const { stdout } = await exec('goal account partkeyinfo');
-            component.setContent(stdout)
+
+            const participation = dataModel.get('participation');
+
+            const data = participation.reduce((carry, partkeyinfo) => {
+                carry.push([
+                    partkeyinfo.address,
+                    partkeyinfo.id,
+                    (new Date(Date.now() + ( (partkeyinfo['effective-last-valid'] - dataModel.get('current_round')) * dataModel.Average_Block_Time ) )).toLocaleString()
+                ])
+                return carry;
+            }, []);
+
+            component.setData({
+                headers: ['key', 'address', 'expires'],
+                data: data
+            })
         } catch(e) {
             component.setContent(e.toString());
         }

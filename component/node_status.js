@@ -1,9 +1,6 @@
 const blessed   = require('blessed');
 const { clearInterval } = require('timers');
-const util      = require('util');
-const exec      = util.promisify(require('node:child_process').exec)
-
-
+const dataModel = require('../data/model');
 
 module.exports = [
     blessed.box,
@@ -15,25 +12,19 @@ module.exports = [
         align: 'left',
     },
     (component, layout) => {
-        const timeout = setInterval(async() => {
-            const content = [];
-            try {
-                const { stdout } = await exec('goal node status');
-                stdout.split("\n").forEach((line) => {
-                    if (~line.indexOf('Last committed block:')) content.push(line);
-                    else if (~line.indexOf('Time since last block:')) content.push(line);
-                    else if (~line.indexOf('Genesis ID:')) content.push(line);
-                    else if (~line.indexOf('Genesis hash:')) content.push(line);
-                });
+        setInterval(async() => {
+            const {
+                genesis_id,
+                genesis_hash,
+                time_since_last_block,
+            } = dataModel.get('node');
 
-                // component.setContent(stdout)
-                // content.push(e.toString())
-            } catch(e) {
-                clearInterval(timeout);
-                content.push(e.toString())
-            }
+            component.setContent([
+                `Time Since Last Block: ${ time_since_last_block / 1000 }s`,
+                `Genesis ID: ${genesis_id}`,
+                `Genesis Hash: ${genesis_hash}`,
+            ].join("\n"));
 
-            component.setContent(content.join("\n"));
             layout.debounceRender();
         }, 1000)
 
