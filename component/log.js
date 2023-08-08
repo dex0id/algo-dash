@@ -1,6 +1,7 @@
 const contrib = require('blessed-contrib')
 const Tail = require('nodejs-tail');
 
+const log = [];
 module.exports = [
     contrib.log,
     {
@@ -17,9 +18,13 @@ module.exports = [
         const filename = '/home/ubuntu/node/data/node.log';
         const tail = new Tail(filename);
 
+        component.setContent(log.join("/n"));
+
         tail.on('line', (line) => {
-            if (!~line.indexOf(process.env.partKeyAddress)) return;
-            component.log(JSON.parse(line));
+            if (!~line.indexOf(process.env.PART_KEY_ADDRESS)) return;
+            const parsed = JSON.parse(line);
+            log.push(parsed)
+            component.log(parsed);
             render();
         })
 

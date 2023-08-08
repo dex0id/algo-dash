@@ -25,9 +25,9 @@ module.exports = [
                 content.push(`Genesis ID: ${info.walletGenesisID}`);
             } else {
                 Promise.all([
-                    fs.readFile(`${process.env.dataDir}/algod.pid`, { encoding: 'utf8' }),
-                    fs.readFile(`${process.env.dataDir}/algod.net`, { encoding: 'utf8' }),
-                    fs.readFile(`${process.env.dataDir}/wallet-genesis.id`, { encoding: 'utf8' }),
+                    fs.readFile(`${process.env.DATA_DIR}/algod.pid`, { encoding: 'utf8' }),
+                    fs.readFile(`${process.env.DATA_DIR}/algod.net`, { encoding: 'utf8' }),
+                    fs.readFile(`${process.env.DATA_DIR}/wallet-genesis.id`, { encoding: 'utf8' }),
                 ]).then(([processID, localApiHost, walletGenesisID]) => {
                     info.processID = processID.trim();
                     info.localApiHost = localApiHost.trim();
