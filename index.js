@@ -19,6 +19,12 @@ const dataModel = require('./data/model');
             'blocks': [
                 ['header',     'header',     'info',],
                 ['header',     'header',     'menu',],
+                ['blocks/table',     'blocks/table',     'blocks/table',],
+                ['blocks/table',     'blocks/table',     'blocks/table',],
+                ['blocks/table',     'blocks/table',     'blocks/table',],
+                ['blocks/table',     'blocks/table',     'blocks/table',],
+                ['blocks/table',     'blocks/table',     'blocks/table',],
+                ['blocks/table',     'blocks/table',     'blocks/table',],
             ],
             'log': [
                 ['header',  'header', 'info',],
