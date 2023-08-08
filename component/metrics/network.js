@@ -17,7 +17,7 @@ module.exports = [
     },
     (component, layout) => {
         const inverval = setInterval(() => {
-            if (!component.visible) clearInterval(inverval);
+            if (!component.visible) return clearInterval(inverval);
             const {
                 time,
                 algod_tx_pool_count,

@@ -2,7 +2,7 @@ const contrib = require('blessed-contrib')
 const dataModel = require('../../data/model')
 
 module.exports = [
-    contrib.bar,
+    contrib.sparkline,
     {
         style: {
             line: "yellow",
@@ -11,25 +11,29 @@ module.exports = [
         },
         xLabelPadding: 3,
         xPadding: 5,
-        label: 'Transactions / Block',
+        label: 'Transactions / Sec',
         barWidth: 10,
         barSpacing: 6,
         xOffset: 0,
        maxHeight: 9,
+       tags: true
     },
     (component, layout) => {
         const inverval = setInterval(() => {
             if (!component.visible) return clearInterval(inverval);
             const blocks = dataModel.get('blocks');
 
-            const { titles, data } = Array.from(blocks).slice(-7).reverse().reduce((carry, [key, value]) => {
-                carry.titles.push(""+value.rnd);
-                carry.data.push(value.txns.length);
+            const { data } = Array.from(blocks).slice(-20).reverse().reduce((carry, [key, value]) => {
+                if (carry.previous) {
+                    const secondsDiff = carry.previous.ts - value.ts
+                    carry.data.set(key, +(value.txn.length / secondsDiff).toFixed(2))
+                }
+                carry.previous = value;
                 return carry;
-            }, {titles: [], data: []});
+            }, { previous: null, data: new Map() });
 
-            if (data.length && titles.length) {
-                component.setData({ titles, data })
+            if (data.size) {
+                component.setData([''], [Array.from(data.values())])
                 layout.debounceRender();
             }
         }, 1000)

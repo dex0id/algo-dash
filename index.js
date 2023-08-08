@@ -28,12 +28,12 @@ const dataModel = require('./data/model');
                 ['log',     'log',    'log'],
             ],
             'metrics': [
-                ['header',  'header', 'info',],
-                ['header',  'header', 'menu',],
-                ['metrics/tx_pool_count',     'metrics/supply',     'metrics/algod_transactions'],
-                ['metrics/tx_pool_count',     'metrics/supply',     'metrics/algod_transactions'],
-                ['blocks/txn_count', 'blocks/txn_count',                   'metrics/algod_transactions'],
-                ['blocks/txn_count', 'blocks/txn_count',                   'metrics/algod_transactions'],
+                ['header',  'header', 'header', 'info', 'info',],
+                ['header',  'header', 'header', 'menu', 'menu',],
+                ['metrics/tx_pool_count', 'metrics/tx_pool_count',    'metrics/online',         'metrics/online',         'blocks/txn_per_sec'],
+                ['metrics/tx_pool_count', 'metrics/tx_pool_count',    'metrics/circulating',    'metrics/circulating',    'blocks/txn_per_sec'],
+                ['blocks/txn_count',      'blocks/txn_count',         'blocks/txn_count',       'blocks/txn_count',       'metrics/algod_transactions'],
+                ['blocks/txn_count',      'blocks/txn_count',         'blocks/txn_count',       'blocks/txn_count',       'metrics/algod_transactions'],
             ],
         }
     )
