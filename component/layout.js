@@ -1,12 +1,17 @@
 const contrib = require('blessed-contrib')
 
 class Layout {
+    screen      = null;
     layout      = null;
     grid        = null;
+    timeout     = null;
     created     = [];
+    gridCache   = {};
     listeners   = {};
+    state       = { page: 'home' }
 
-    constructor(layout) {
+    constructor(screen, layout) {
+        this.screen = screen;
         this.layout = layout;
     }
 
@@ -14,7 +19,7 @@ class Layout {
         const [mod, config, callback] = require(`./${componentName}`);
         const component = this.grid.set.apply(this.grid, this.getLayoutCoordinates(componentName).concat([mod, config]));
         try {
-            callback(component, () => this.trigger('repaint'))
+            callback(component, this)
         } catch(e) {}
 
         return componentName;
@@ -23,7 +28,7 @@ class Layout {
     getLayoutCoordinates(componentName) {
         const coord = [null, null, 0, 0];
 
-        this.layout.forEach((row, rowIndex) => {
+        this.layout[this.state.page].forEach((row, rowIndex) => {
             row.forEach((column, colIndex) => {
                 if (column === componentName) {
                     // row
@@ -41,18 +46,40 @@ class Layout {
         return coord;
     }
 
-    render(screen) {
-        this.grid = new contrib.grid({
-            rows: this.layout.length,
-            cols: this.layout[0].length,
-            screen
+    debounceRender(config)
+    {
+        if (this.timeout) return this;
+        this.timeout = setTimeout(() => this.render(config), 1000);
+        return this;
+    }
+
+    render(config) {
+        this.timeout = null;
+
+        if (config) {
+            Object.assign(this.state, config);
+            let i = this.screen.children.length;
+            while (i--) this.screen.children[i].detach();
+            this.created = [];
+            this.render();
+        }
+
+        const cacheKey = this.state.page;
+        this.gridCache[cacheKey] = this.grid = this.gridCache.hasOwnProperty(cacheKey) ? this.gridCache[cacheKey] : new contrib.grid({
+            rows: this.layout[this.state.page].length,
+            cols: this.layout[this.state.page][0].length,
+            screen: this.screen
         });
 
-        this.layout.forEach(row => {
+        this.layout[this.state.page].forEach(row => {
             row.forEach(column => {
+                if (!column) return;
+                if (this.created)
                 if (!~this.created.indexOf(column)) this.created.push(this.create(column))
             })
         });
+
+        this.screen.render();
     }
 
     trigger(event) {

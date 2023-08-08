@@ -1,16 +1,29 @@
 process.env.partKeyAddress = 'LFLL27QB3GZCGP3C4OQW64PAHDHVS65TWL2L3XCUW5LRFJCPX75HXNMVXA';
+process.env.dataDir = '/Users/don/algorand/node/data';
 
 const screen = require('blessed').screen();
 const Layout = require('./component/layout');
-const layout = new Layout(
-    [
-        ['logo',            'wallet',        'log',    'log',    'log'],
-        ['partkeyinfo',     'partkeyinfo',   'log',    'log',    'log'],
-        ['partkeyinfo',     'partkeyinfo',   'log',    'log',    'log'],
-        ['node_status',     'node_status',   'log',    'log',    'log'],
-        ['node_status',     'node_status',   'log',    'log',    'log'],
-    ]
+const home = new Layout(screen,
+    {
+        'home': [
+            ['info',       'menu',       'menu',],
+            ['partkeyinfo','partkeyinfo','partkeyinfo', ],
+            ['partkeyinfo','partkeyinfo','partkeyinfo', ],
+            ['node_status','node_status','node_status', ],
+            ['node_status','node_status','node_status', ],
+        ],
+        'blocks': [
+            ['info',       'menu',       'menu',],
+        ],
+        'log': [
+            ['info',    'menu',   'menu',],
+            ['log',     'log',    'log'],
+            ['log',     'log',    'log'],
+            ['log',     'log',    'log'],
+            ['log',     'log',    'log'],
+            ['log',     'log',    'log'],
+        ],
+    }
 )
-layout.on('repaint', () => screen.render())
-layout.render(screen);
+home.render();
 screen.key(['escape', 'q', 'C-c'], (ch, key) => process.exit(0));

@@ -13,13 +13,13 @@ module.exports = [
             fg: "cyan"
         }
     },
-    (component, render) => {
+    (component, { render }) => {
         const filename = '/home/ubuntu/node/data/node.log';
         const tail = new Tail(filename);
 
         tail.on('line', (line) => {
             if (!~line.indexOf(process.env.partKeyAddress)) return;
-            component.log(line);
+            component.log(JSON.parse(line));
             render();
         })
 

@@ -11,10 +11,14 @@ module.exports = [
         height: 10,
         align: 'left',
     },
-    async (component, render) => {
-        const { stdout } = await exec('goal wallet list');
-        component.setContent(stdout)
-        render();
+    async (component, layout) => {
+        try {
+            const { stdout } = await exec('goal wallet list');
+            component.setContent(stdout)
+        } catch(e) {
+            component.setContent(e.toString());
+        }
+        layout.debounceRender();
     }
 ]
 

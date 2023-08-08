@@ -11,9 +11,14 @@ module.exports = [
         height: 10,
         align: 'left',
     },
-    async (component, render) => {
-        const { stdout } = await exec('goal account partkeyinfo');
-        component.setContent(stdout)
-        render();
+    async (component, layout) => {
+        try {
+            const { stdout } = await exec('goal account partkeyinfo');
+            component.setContent(stdout)
+        } catch(e) {
+            component.setContent(e.toString());
+        }
+
+        layout.debounceRender();
     }
 ]
