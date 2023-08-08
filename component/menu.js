@@ -20,11 +20,11 @@ module.exports = [
     },
     (component, layout) => {
         component.items.forEach(component.removeItem);
+        component.focus();
 
         ['Home', 'Blocks', 'Log'].forEach(item => {
             component.addItem(item);
         });
         component.on('select', item => layout.render({ page: item.getText().split(':').pop().toLowerCase() }))
-        component.focus();
     }
 ]

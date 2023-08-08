@@ -7,7 +7,7 @@ class DataModel {
 
     constructor(data)
     {
-        this._data = data;
+        Object.assign(this._data, data || {});
     }
 
     // load all data from all sources into this model so it can be used between components.
@@ -26,7 +26,7 @@ class DataModel {
 
         const { major, minor, build_number, channel } = versions.build;
         this._data.node = {
-            process_id: pid,
+            process_id: pid.trim(),
             genesis_id: versions.genesis_id,
             genesis_hash: versions.genesis_hash_b64,
             version: `${major}.${minor}.${build_number}.${channel}`
@@ -48,10 +48,11 @@ class DataModel {
                 total:  supply['total-money'],
             };
 
-            const { block } = await this.api.get(`v2/blocks/${this._data.current_round}`);
-            this._data.blocks.set(block.rnd, block);
-            this._data.node.time_since_last_block = Date.now() - block.ts;
-            console.log(this._data)
+            const { block } = await this.api.get(`/v2/blocks/${this._data.current_round}`);
+            if (block) {
+                this._data.blocks.set(block.rnd, block);
+                this._data.node.time_since_last_block = Date.now() - block.ts;
+            }
         }, 1000)
     }
 

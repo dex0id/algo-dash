@@ -8,9 +8,9 @@ module.exports = class DataApi {
             const token = await fs.readFile(`${process.env.DATA_DIR}/algod.token`, { encoding: 'utf8' });
             const adminToken = await fs.readFile(`${process.env.DATA_DIR}/algod.admin.token`, { encoding: 'utf8' });
 
-            this.host = host;
-            this.token = token;
-            this.adminToken = adminToken;
+            this.host = host.trim();
+            this.token = token.trim();
+            this.adminToken = adminToken.trim();
         } catch(err) {
             console.log(err);
         }
@@ -25,16 +25,16 @@ module.exports = class DataApi {
     {
         try {
             const token = resource.indexOf('/v2') === 0 ? this.adminToken : this.token;
-            const response = await fetch(`${this.host}${resource}`, {
+            const response = await fetch(`http://${this.host}${resource}`, {
                 method,
                 headers: {
                     "X-Algo-API-Token": token,
-                },
-                body: JSON.stringify(data)
+                }
             })
 
             if (!response.ok) return {};
 
+            if (resource === '/metrics') return await response.text();
             return await response.json();
         } catch(e) {
             console.log(e);

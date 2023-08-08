@@ -9,8 +9,9 @@ module.exports = [
         right: 1,
         height: 10,
         align: 'left',
+        columnWidth: '50%'
     },
-    async (component, layout) => {
+    (component, layout) => {
         try {
 
             const participation = dataModel.get('participation');
