@@ -18,8 +18,8 @@ module.exports = [
        maxHeight: 9,
     },
     (component, layout) => {
-        const inverval = setInterval(() => {
-            if (!component.visible) return clearInterval(inverval);
+        const interval = setInterval(() => {
+            if (!component.visible) return clearInterval(interval);
             const blocks = dataModel.get('blocks');
 
             const { titles, data } = Array.from(blocks).slice(-7).reverse().reduce((carry, [key, value]) => {

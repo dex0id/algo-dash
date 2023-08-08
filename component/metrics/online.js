@@ -10,7 +10,7 @@ module.exports = [
     },
     (component, layout) => {
         const interval = setInterval(() => {
-            if (!component.visible) return clearInterval(inverval);
+            if (!component.visible) return clearInterval(interval);
             const {
                 online,
                 total,

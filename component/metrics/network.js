@@ -16,8 +16,8 @@ module.exports = [
         legend: {width: 12}
     },
     (component, layout) => {
-        const inverval = setInterval(() => {
-            if (!component.visible) return clearInterval(inverval);
+        const interval = setInterval(() => {
+            if (!component.visible) return clearInterval(interval);
             const {
                 time,
                 algod_tx_pool_count,

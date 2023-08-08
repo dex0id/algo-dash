@@ -19,8 +19,8 @@ module.exports = [
        tags: true
     },
     (component, layout) => {
-        const inverval = setInterval(() => {
-            if (!component.visible) return clearInterval(inverval);
+        const interval = setInterval(() => {
+            if (!component.visible) return clearInterval(interval);
             const blocks = dataModel.get('blocks');
 
             const { data } = Array.from(blocks).slice(-20).reverse().reduce((carry, [key, value]) => {
