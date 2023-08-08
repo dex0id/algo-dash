@@ -1,7 +1,7 @@
 const DataApi = require('./api')
 const fs = require('fs').promises
 class DataModel {
-    Average_Block_Time = 3.3 * 10000;
+    Average_Block_Time = 3.3 * 1000;
 
     _data = {
         blocks: new Map(),

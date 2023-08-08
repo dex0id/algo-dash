@@ -10,13 +10,13 @@ module.exports = [
         height: 10,
         align: 'left',
         columnSpacing: 10,
-        columnWidth: [50, 60, 25]
+        columnWidth: [25, 25, 25, 25]
     },
     (component, layout) => {
         try {
             const participation = dataModel.get('participation');
             component.setData({
-                headers: ['key', 'address', 'expires'],
+                headers: ['Key', 'Address', 'Last Valid Round', 'Estimated Expiration'],
                 data: participation.reduce((carry, partkeyinfo) => {
                     const now = Date.now();
                     const node = dataModel.get('node');
@@ -24,9 +24,10 @@ module.exports = [
                     const blockDiffTime = blockDiff * dataModel.Average_Block_Time;
 
                     carry.push([
-                        partkeyinfo.id,
-                        partkeyinfo.address,
-                        (new Date( now + blockDiffTime )).toLocaleString()
+                        partkeyinfo.id.substring(0,20) + '...',
+                        partkeyinfo.address.substring(0,20) + '...',
+                        partkeyinfo['effective-last-valid'],
+                        (new Date( now + (blockDiffTime) )).toLocaleString()
                     ])
                     return carry;
                 }, [])
