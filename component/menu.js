@@ -1,7 +1,7 @@
-const contrib = require('blessed-contrib')
+const blessed = require('blessed')
 
 module.exports = [
-    contrib.listbar,
+    blessed.listbar,
     {
         label: "Menu",
         mouse: true,

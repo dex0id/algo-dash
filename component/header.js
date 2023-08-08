@@ -1,10 +1,6 @@
 const blessed = require('blessed')
 const dataModel = require('../data/model')
 
-const info = {
-
-}
-
 module.exports = [
     blessed.box,
     {
