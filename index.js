@@ -13,8 +13,8 @@ const dataModel = require('./data/model');
                 ['header',     'header',     'header',      'info', 'info'],
                 ['header',     'header',     'header',      'menu', 'menu'],
                 ['partkeyinfo','partkeyinfo','partkeyinfo', 'partkeyinfo', 'partkeyinfo'],
-                ['node_status','node_status','node_status', 'log', 'log'],
-                ['node_status','node_status','node_status', 'log', 'log'],
+                ['node_status','node_status','log', 'log', 'log'],
+                ['node_status','node_status','log', 'log', 'log'],
             ],
             'blocks': [
                 ['header',     'header',     'info',],

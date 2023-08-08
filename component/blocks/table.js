@@ -15,6 +15,8 @@ module.exports = [
         columnWidth: [20, 20, 20] /*in chars*/
     },
     (component, layout) => {
+        component.on('click', () => component.focus());
+
         const interval = setInterval(() => {
             if (!component.visible) return clearInterval(interval);
             const blocks = dataModel.get('blocks');
@@ -28,7 +30,6 @@ module.exports = [
                 return carry;
             }, []);
 
-            component.on('click', () => component.focus());
             if (data.length) {
                 component.setData({
                     headers: ['Round', 'Total Transactions', 'Timestamp'],
