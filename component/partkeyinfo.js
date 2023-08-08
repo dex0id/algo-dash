@@ -19,7 +19,8 @@ module.exports = [
                 headers: ['key', 'address', 'expires'],
                 data: participation.reduce((carry, partkeyinfo) => {
                     const now = Date.now();
-                    const blockDiff = partkeyinfo['effective-last-valid'] - dataModel.get('current_round');
+                    const node = dataModel.get('node');
+                    const blockDiff = partkeyinfo['effective-last-valid'] - node.current_round;
                     const blockDiffTime = blockDiff * dataModel.Average_Block_Time;
 
                     carry.push([

@@ -21,9 +21,10 @@ class DataModel {
         await this.api.load();
 
         const pid = await fs.readFile(`${process.env.DATA_DIR}/algod.pid`, { encoding: 'utf8' });
-        const [versions, participation] = await Promise.all([
+        const [versions, participation, supply] = await Promise.all([
             this.api.get('/versions'),
             this.api.get('/v2/participation'),
+            this.api.get('/v2/ledger/supply')
         ]);
 
         const { major, minor, build_number, channel } = versions.build;
@@ -35,6 +36,12 @@ class DataModel {
         };
 
         this._data.participation = participation;
+
+        this._data.node.current_round = supply.current_round;
+        this._data.supply = {
+            online: supply['online-money'],
+            total:  supply['total-money'],
+        };
 
         setInterval(async () => {
             const supply = await this.api.get('/v2/ledger/supply');
