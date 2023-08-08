@@ -18,7 +18,7 @@ const dataModel = require('./data/model');
             ],
             'blocks': [
                 ['header',     'header',     'info',],
-                ['header',     'header',       'menu',],
+                ['header',     'header',     'menu',],
             ],
             'log': [
                 ['header',  'header', 'info',],
@@ -26,8 +26,14 @@ const dataModel = require('./data/model');
                 ['log',     'log',    'log'],
                 ['log',     'log',    'log'],
                 ['log',     'log',    'log'],
-                ['log',     'log',    'log'],
-                ['log',     'log',    'log'],
+            ],
+            'metrics': [
+                ['header',  'header', 'info',],
+                ['header',  'header', 'menu',],
+                ['metrics/tx_pool_count',     'metrics/supply',     'metrics/algod_transactions'],
+                ['metrics/tx_pool_count',     'metrics/supply',     'metrics/algod_transactions'],
+                ['blocks/txn_count', 'blocks/txn_count',                   'metrics/algod_transactions'],
+                ['blocks/txn_count', 'blocks/txn_count',                   'metrics/algod_transactions'],
             ],
         }
     )

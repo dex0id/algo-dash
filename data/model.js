@@ -3,7 +3,10 @@ const fs = require('fs').promises
 class DataModel {
     Average_Block_Time = 3.3 * 10000;
 
-    _data = { blocks: new Map() }
+    _data = {
+        blocks: new Map(),
+        metrics: {},
+    }
 
     constructor(data)
     {
@@ -18,9 +21,8 @@ class DataModel {
         await this.api.load();
 
         const pid = await fs.readFile(`${process.env.DATA_DIR}/algod.pid`, { encoding: 'utf8' });
-        const [versions, metrics, participation] = await Promise.all([
+        const [versions, participation] = await Promise.all([
             this.api.get('/versions'),
-            this.api.get('/metrics'),
             this.api.get('/v2/participation'),
         ]);
 
@@ -32,12 +34,6 @@ class DataModel {
             version: `${major}.${minor}.${build_number}.${channel}`
         };
 
-        this._data.metrics = metrics.match(/^[^#].+/gm).reduce((c,l) => {
-            const [key, value] = l.match(/\w+/g);
-            c[key] = value;
-            return c;
-        }, {});
-
         this._data.participation = participation;
 
         setInterval(async () => {
@@ -47,6 +43,16 @@ class DataModel {
                 online: supply['online-money'],
                 total:  supply['total-money'],
             };
+
+            const metrics = await this.api.get('/metrics');
+            this._data.metrics['time'] = this._data.metrics['time'] || [];
+            this._data.metrics['time'].push(new Date(Date.now()).toLocaleTimeString());
+            this._data.metrics = metrics.match(/^[^#].+/gm).reduce((c,l) => {
+                const [key, value] = l.match(/\w+/g);
+                c[key] = c[key] || [];
+                c[key].push(value);
+                return c;
+            }, this._data.metrics);
 
             const { block } = await this.api.get(`/v2/blocks/${this._data.node.current_round}`);
             if (block) {

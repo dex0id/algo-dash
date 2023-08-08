@@ -1,5 +1,5 @@
 const contrib = require('blessed-contrib')
-const dataModel = require('../data/model')
+const dataModel = require('../../data/model')
 
 module.exports = [
     contrib.line,
@@ -11,7 +11,7 @@ module.exports = [
         },
         xLabelPadding: 3,
         xPadding: 5,
-        label: 'AlgoD Transactions',
+        label: 'Messages',
         showLegend: true,
         legend: {width: 12}
     },
