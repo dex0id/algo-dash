@@ -16,12 +16,12 @@ module.exports = class DataApi {
         }
     }
 
-    get(resource, data = {})
+    get(resource)
     {
-        return this.request('GET', resource, data)
+        return this.request('GET', resource)
     }
 
-    async request(method, resource, data={})
+    async request(method, resource)
     {
         try {
             const token = resource.indexOf('/v2') === 0 ? this.adminToken : this.token;

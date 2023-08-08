@@ -36,8 +36,7 @@ module.exports = [
             const parsed = JSON.parse(line);
             const formatted = Object.keys(parsed).map((key) => {
                 const ln = typeof parsed[key] === 'string' ? `${key}: ${parsed[key]}` : `${key}: ${JSON.stringify(parsed[key])}`
-                log.push(ln)
-                log.push(' ');
+                log.push(ln);
                 component.log(ln);
             });
 

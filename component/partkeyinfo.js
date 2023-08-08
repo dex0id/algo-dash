@@ -5,10 +5,12 @@ module.exports = [
     contrib.table,
     {
         label: "Part Key Info",
-        left: 1,
-        right: 1,
-        height: 10,
-        align: 'left',
+        keys: true,
+        fg: 'white',
+        selectedFg: 'white',
+        selectedBg: 'green',
+        interactive: true,
+        border: {type: "line", fg: "cyan"},
         columnSpacing: 10,
         columnWidth: [25, 25, 25, 25]
     },

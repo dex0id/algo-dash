@@ -14,7 +14,6 @@ class DataModel {
     }
 
     // load all data from all sources into this model so it can be used between components.
-
     async load()
     {
         this.api = new DataApi();

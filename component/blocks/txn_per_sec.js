@@ -12,7 +12,7 @@ module.exports = [
         xLabelPadding: 3,
         xPadding: 5,
         label: 'Transactions / Sec',
-        barWidth: 10,
+        // barWidth: 10,
         barSpacing: 6,
         xOffset: 0,
        maxHeight: 9,

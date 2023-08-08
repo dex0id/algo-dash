@@ -22,7 +22,7 @@ module.exports = [
             if (!component.visible) return clearInterval(interval);
             const blocks = dataModel.get('blocks');
 
-            const { titles, data } = Array.from(blocks).slice(-7).reverse().reduce((carry, [key, value]) => {
+            const { titles, data } = Array.from(blocks).slice(-20).reverse().reduce((carry, [key, value]) => {
                 carry.titles.push(""+value.rnd);
                 carry.data.push(value.txns.length);
                 return carry;
