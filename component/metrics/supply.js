@@ -9,20 +9,24 @@ module.exports = [
         remainColor: 'black',
         yPadding: 2,
     },
-    (component, layout) => setInterval(() => {
-        const {
-            online,
-            total,
-        } = dataModel.get('supply');
+    (component, layout) => {
+        const inverval = setInterval(() => {
+            if (!component.visible) clearInterval(inverval);
 
-        const onlinePercent = (online / total * 100).toFixed(2);
-        const totalSupply = 10_000_000_000_000_000n;
-        const circulatingSupplyPer = (Number(BigInt(total) / 1_000_000n) / Number(totalSupply / 1_000_000n) * 100).toFixed(2)
+            const {
+                online,
+                total,
+            } = dataModel.get('supply');
 
-        component.setData([
-            {percent: Number(onlinePercent), label: 'Online', color: 'green'},
-            {percent: Number(circulatingSupplyPer), label: 'Circulating', color: 'Yellow'},
-        ])
-        layout.debounceRender();
-    }, 1000)
+            const onlinePercent = (online / total * 100).toFixed(2);
+            const totalSupply = 10_000_000_000_000_000n;
+            const circulatingSupplyPer = (Number(BigInt(total) / 1_000_000n) / Number(totalSupply / 1_000_000n) * 100).toFixed(2)
+
+            component.setData([
+                {percent: Number(onlinePercent), label: 'Online', color: 'green'},
+                {percent: Number(circulatingSupplyPer), label: 'Circulating', color: 'Yellow'},
+            ])
+            layout.debounceRender();
+        }, 1000)
+    }
 ]

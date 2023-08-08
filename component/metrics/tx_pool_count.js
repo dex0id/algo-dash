@@ -15,21 +15,24 @@ module.exports = [
         showLegend: true,
         legend: {width: 12}
     },
-    (component, layout) => setInterval(() => {
-        const {
-            time,
-            algod_tx_pool_count,
-        } = dataModel.get('metrics');
-        if (time.length) {
-            component.setData([
-                {
-                    title: 'Txn Pool Count',
-                    x: time.slice(-20),
-                    y: algod_tx_pool_count.slice(-20).map(x => +x),
-                    style: { line: 'green' }
-                }
-            ])
-            layout.debounceRender();
-        }
-    }, 1000)
+    (component, layout) => {
+        const inverval = setInterval(() => {
+            if (!component.visible) clearInterval(inverval);
+            const {
+                time,
+                algod_tx_pool_count,
+            } = dataModel.get('metrics');
+            if (time.length) {
+                component.setData([
+                    {
+                        title: 'Txn Pool Count',
+                        x: time.slice(-20),
+                        y: algod_tx_pool_count.slice(-20).map(x => +x),
+                        style: { line: 'green' }
+                    }
+                ])
+                layout.debounceRender();
+            }
+        }, 1000)
+    }
 ]

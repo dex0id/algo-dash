@@ -17,18 +17,21 @@ module.exports = [
         xOffset: 0,
        maxHeight: 9,
     },
-    (component, layout) => setInterval(() => {
-        const blocks = dataModel.get('blocks');
+    (component, layout) => {
+        const inverval = setInterval(() => {
+            if (!component.visible) clearInterval(inverval);
+            const blocks = dataModel.get('blocks');
 
-        const { titles, data } = Array.from(blocks).slice(-7).reverse().reduce((carry, [key, value]) => {
-            carry.titles.push(""+value.rnd);
-            carry.data.push(value.txns.length);
-            return carry;
-        }, {titles: [], data: []});
+            const { titles, data } = Array.from(blocks).slice(-7).reverse().reduce((carry, [key, value]) => {
+                carry.titles.push(""+value.rnd);
+                carry.data.push(value.txns.length);
+                return carry;
+            }, {titles: [], data: []});
 
-        if (data.length && titles.length) {
-            component.setData({ titles, data })
-            layout.debounceRender();
-        }
-    }, 1000)
+            if (data.length && titles.length) {
+                component.setData({ titles, data })
+                layout.debounceRender();
+            }
+        }, 1000)
+    }
 ]

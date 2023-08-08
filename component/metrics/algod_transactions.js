@@ -15,33 +15,36 @@ module.exports = [
         showLegend: true,
         legend: {width: 12}
     },
-    (component, layout) => setInterval(() => {
-        const {
-            time,
-            algod_transaction_messages_handled,
-            algod_transaction_messages_err_or_committed,
-            algod_transaction_messages_remember
-        } = dataModel.get('metrics');
-        if (time.length) {
-            component.setData([
-                {
-                    title: 'Messages Handled',
-                    x: time.slice(-20),
-                    y: algod_transaction_messages_handled.slice(-20).map(x => +x),
-                    style: { line: 'green' }
-                }, {
-                    title: 'Err or Committed',
-                    x: time.slice(-20),
-                    y: algod_transaction_messages_err_or_committed.slice(-20).map(x => +x),
-                    style: { line: 'red' }
-                }, {
-                    title: 'Messages Remember',
-                    x: time.slice(-20),
-                    y: algod_transaction_messages_remember.slice(-20).map(x => +x),
-                    style: { line: 'yellow' }
-                }
-            ])
-            layout.debounceRender();
-        }
-    }, 1000)
+    (component, layout) => {
+        const inverval = setInterval(() => {
+            if (!component.visible) clearInterval(inverval);
+            const {
+                time,
+                algod_transaction_messages_handled,
+                algod_transaction_messages_err_or_committed,
+                algod_transaction_messages_remember
+            } = dataModel.get('metrics');
+            if (time.length) {
+                component.setData([
+                    {
+                        title: 'Messages Handled',
+                        x: time.slice(-20),
+                        y: algod_transaction_messages_handled.slice(-20).map(x => +x),
+                        style: { line: 'green' }
+                    }, {
+                        title: 'Err or Committed',
+                        x: time.slice(-20),
+                        y: algod_transaction_messages_err_or_committed.slice(-20).map(x => +x),
+                        style: { line: 'red' }
+                    }, {
+                        title: 'Messages Remember',
+                        x: time.slice(-20),
+                        y: algod_transaction_messages_remember.slice(-20).map(x => +x),
+                        style: { line: 'yellow' }
+                    }
+                ])
+                layout.debounceRender();
+            }
+        }, 1000)
+}
 ]
