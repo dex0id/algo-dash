@@ -1,3 +1,5 @@
+const DataApi = require('./api')
+const fs = require('fs').promises
 class DataModel {
     Average_Block_Time = 3.3 * 10000;
 
@@ -15,8 +17,8 @@ class DataModel {
         this.api = new DataApi();
         await this.api.load();
 
-        const [pid, versions, metrics, participation] = await Promise.all([
-            fs.readFile(`${process.env.DATA_DIR}/algod.pid`, { encoding: 'utf8' }),
+        const pid = await fs.readFile(`${process.env.DATA_DIR}/algod.pid`, { encoding: 'utf8' });
+        const [versions, metrics, participation] = await Promise.all([
             this.api.get('/versions'),
             this.api.get('/metrics'),
             this.api.get('/v2/participation'),
@@ -66,4 +68,4 @@ class DataModel {
 }
 
 globalThis.dataModel = globalThis.dataModel || new DataModel();
-module.exports.default = globalThis.dataModel;
+module.exports = globalThis.dataModel;

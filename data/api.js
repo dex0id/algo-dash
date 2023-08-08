@@ -1,14 +1,12 @@
+const fs = require('fs').promises
 
-
-class DataApi {
+module.exports = class DataApi {
     async load()
     {
         try {
-            const [host, token, adminToken] = await Promise.all([
-                fs.readFile(`${process.env.DATA_DIR}/algod.net`, { encoding: 'utf8' }),
-                fs.readFile(`${process.env.DATA_DIR}/algod.token`, { encoding: 'utf8' }),
-                fs.readFile(`${process.env.DATA_DIR}/algod.admin.token`, { encoding: 'utf8' }),
-            ])
+            const host = await fs.readFile(`${process.env.DATA_DIR}/algod.net`, { encoding: 'utf8' });
+            const token = await fs.readFile(`${process.env.DATA_DIR}/algod.token`, { encoding: 'utf8' });
+            const adminToken = await fs.readFile(`${process.env.DATA_DIR}/algod.admin.token`, { encoding: 'utf8' });
 
             this.host = host;
             this.token = token;
