@@ -42,13 +42,13 @@ class DataModel {
 
         setInterval(async () => {
             const supply = await this.api.get('/v2/ledger/supply');
-            this._data.current_round = supply.current_round;
+            this._data.node.current_round = supply.current_round;
             this._data.supply = {
                 online: supply['online-money'],
                 total:  supply['total-money'],
             };
 
-            const { block } = await this.api.get(`/v2/blocks/${this._data.current_round}`);
+            const { block } = await this.api.get(`/v2/blocks/${this._data.node.current_round}`);
             if (block) {
                 this._data.blocks.set(block.rnd, block);
                 this._data.node.time_since_last_block = Date.now() - (block.ts * 1000);

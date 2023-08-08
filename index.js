@@ -1,6 +1,7 @@
 require('dotenv').config();
 
-const screen = require('blessed').screen();
+const screen = require('blessed').screen({ smartCSR: true, autoPadding: true });
+screen.title = 'Algorand Node';
 const Layout = require('./component/layout');
 const dataModel = require('./data/model');
 (async() => {
@@ -9,17 +10,19 @@ const dataModel = require('./data/model');
     const home = new Layout(screen,
         {
             'home': [
-                ['info',       'menu',       'menu',        'menu', 'menu'],
-                ['partkeyinfo','partkeyinfo','partkeyinfo', 'log', 'log'],
-                ['partkeyinfo','partkeyinfo','partkeyinfo', 'log', 'log'],
+                ['header',     'header',     'header',      'info', 'info'],
+                ['header',     'header',     'header',      'menu', 'menu'],
+                ['partkeyinfo','partkeyinfo','partkeyinfo', 'partkeyinfo', 'partkeyinfo'],
                 ['node_status','node_status','node_status', 'log', 'log'],
                 ['node_status','node_status','node_status', 'log', 'log'],
             ],
             'blocks': [
-                ['info',       'menu',       'menu',],
+                ['header',     'header',     'info',],
+                ['header',     'header',       'menu',],
             ],
             'log': [
-                ['info',    'menu',   'menu',],
+                ['header',  'header', 'info',],
+                ['header',  'header', 'menu',],
                 ['log',     'log',    'log'],
                 ['log',     'log',    'log'],
                 ['log',     'log',    'log'],

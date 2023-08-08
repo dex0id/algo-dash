@@ -17,9 +17,11 @@ module.exports = [
                 genesis_id,
                 genesis_hash,
                 time_since_last_block,
+                current_round,
             } = dataModel.get('node');
 
             component.setContent([
+                `Current Block: ${current_round}`,
                 `Time Since Last Block: ${ time_since_last_block / 1000 }s`,
                 `Genesis ID: ${genesis_id}`,
                 `Genesis Hash: ${genesis_hash}`,
