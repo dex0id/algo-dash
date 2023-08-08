@@ -51,7 +51,7 @@ class DataModel {
             const { block } = await this.api.get(`/v2/blocks/${this._data.current_round}`);
             if (block) {
                 this._data.blocks.set(block.rnd, block);
-                this._data.node.time_since_last_block = Date.now() - block.ts;
+                this._data.node.time_since_last_block = Date.now() - (block.ts * 1000);
             }
         }, 1000)
     }
